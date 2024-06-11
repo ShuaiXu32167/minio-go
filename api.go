@@ -178,6 +178,11 @@ func (c *Client) EndpointURL() *url.URL {
 	return &endpoint
 }
 
+// GetOverrideSignerType returns the override signer type.
+func (c *Client) GetOverrideSignerType() credentials.SignatureType {
+	return c.overrideSignerType
+}
+
 // lockedRandSource provides protected rand source, implements rand.Source interface.
 type lockedRandSource struct {
 	lk  sync.Mutex
