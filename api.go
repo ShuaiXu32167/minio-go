@@ -110,6 +110,7 @@ type Options struct {
 	Trace        *httptrace.ClientTrace
 	Region       string
 	BucketLookup BucketLookupType
+	V2Sign       bool
 
 	// Allows setting a custom region lookup based on URL pattern
 	// not all URL patterns are covered by this library so if you
@@ -268,6 +269,10 @@ func privateNew(endpoint string, opts *Options) (*Client, error) {
 	}
 	if clnt.sha256Hasher == nil {
 		clnt.sha256Hasher = newSHA256Hasher
+	}
+
+	if opts.V2Sign {
+		clnt.overrideSignerType = credentials.SignatureV2
 	}
 
 	clnt.trailingHeaderSupport = opts.TrailingHeaders && clnt.overrideSignerType.IsV4()
