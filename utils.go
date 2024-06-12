@@ -21,7 +21,6 @@ import (
 	"context"
 	"crypto/md5"
 	"crypto/sha256"
-	"crypto/tls"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/xml"
@@ -624,7 +623,7 @@ func IsNetworkOrHostDown(err error, expectTimeouts bool) bool {
 	urlErr := &url.Error{}
 	if errors.As(err, &urlErr) {
 		switch urlErr.Err.(type) {
-		case *net.DNSError, *net.OpError, net.UnknownNetworkError, *tls.CertificateVerificationError:
+		case *net.DNSError, *net.OpError, net.UnknownNetworkError:
 			return true
 		}
 	}
